@@ -1,0 +1,156 @@
+<html>
+<head>
+<title>EmergencyBedBooking.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+EmergencyBedBooking.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">hospital</span><span class="s2">.</span><span class="s1">management</span><span class="s2">.</span><span class="s1">system</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.</span><span class="s1">ActionEvent</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.</span><span class="s1">ActionListener</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">sql</span><span class="s2">.*;</span>
+
+<span class="s0">public class </span><span class="s1">EmergencyBedBooking </span><span class="s0">extends </span><span class="s1">JFrame </span><span class="s0">implements </span><span class="s1">ActionListener </span><span class="s2">{</span>
+    <span class="s3">// Properly used fields</span>
+    <span class="s0">private final </span><span class="s1">Choice roomChoice</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">JTextField nameField</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">JTextField contactField</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">JRadioButton maleRadio</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">JRadioButton femaleRadio</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">JButton bookBtn</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">JButton backBtn</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">EmergencyBedBooking</span><span class="s2">() {</span>
+        <span class="s1">setTitle</span><span class="s2">(</span><span class="s4">&quot;Emergency Bed Booking&quot;</span><span class="s2">);</span>
+        <span class="s1">setSize</span><span class="s2">(</span><span class="s5">800</span><span class="s2">, </span><span class="s5">500</span><span class="s2">);</span>
+        <span class="s1">setLocationRelativeTo</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+        <span class="s1">setLayout</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+        <span class="s1">getContentPane</span><span class="s2">().</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Color</span><span class="s2">(</span><span class="s5">90</span><span class="s2">, </span><span class="s5">156</span><span class="s2">, </span><span class="s5">163</span><span class="s2">));</span>
+
+        <span class="s3">// Initialize components</span>
+        <span class="s1">JLabel title </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;EMERGENCY BED BOOKING&quot;</span><span class="s2">);</span>
+        <span class="s1">title</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">150</span><span class="s2">, </span><span class="s5">20</span><span class="s2">, </span><span class="s5">500</span><span class="s2">, </span><span class="s5">30</span><span class="s2">);</span>
+        <span class="s1">title</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s4">&quot;Tahoma&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s5">24</span><span class="s2">));</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">title</span><span class="s2">);</span>
+
+        <span class="s3">// Patient Name</span>
+        <span class="s1">JLabel nameLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Patient Name:&quot;</span><span class="s2">);</span>
+        <span class="s1">nameLabel</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">50</span><span class="s2">, </span><span class="s5">80</span><span class="s2">, </span><span class="s5">150</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">nameLabel</span><span class="s2">);</span>
+
+        <span class="s1">nameField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">nameField</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">200</span><span class="s2">, </span><span class="s5">80</span><span class="s2">, </span><span class="s5">200</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">nameField</span><span class="s2">);</span>
+
+        <span class="s3">// Gender Selection</span>
+        <span class="s1">JLabel genderLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Gender:&quot;</span><span class="s2">);</span>
+        <span class="s1">genderLabel</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">50</span><span class="s2">, </span><span class="s5">120</span><span class="s2">, </span><span class="s5">150</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">genderLabel</span><span class="s2">);</span>
+
+        <span class="s1">maleRadio </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JRadioButton</span><span class="s2">(</span><span class="s4">&quot;Male&quot;</span><span class="s2">);</span>
+        <span class="s1">maleRadio</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">200</span><span class="s2">, </span><span class="s5">120</span><span class="s2">, </span><span class="s5">80</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">femaleRadio </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JRadioButton</span><span class="s2">(</span><span class="s4">&quot;Female&quot;</span><span class="s2">);</span>
+        <span class="s1">femaleRadio</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">280</span><span class="s2">, </span><span class="s5">120</span><span class="s2">, </span><span class="s5">80</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">ButtonGroup genderGroup </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ButtonGroup</span><span class="s2">();</span>
+        <span class="s1">genderGroup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">maleRadio</span><span class="s2">);</span>
+        <span class="s1">genderGroup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">femaleRadio</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">maleRadio</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">femaleRadio</span><span class="s2">);</span>
+
+        <span class="s3">// Contact Info</span>
+        <span class="s1">JLabel contactLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Contact Number:&quot;</span><span class="s2">);</span>
+        <span class="s1">contactLabel</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">50</span><span class="s2">, </span><span class="s5">160</span><span class="s2">, </span><span class="s5">150</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">contactLabel</span><span class="s2">);</span>
+
+        <span class="s1">contactField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">contactField</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">200</span><span class="s2">, </span><span class="s5">160</span><span class="s2">, </span><span class="s5">200</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">contactField</span><span class="s2">);</span>
+
+        <span class="s3">// Room Selection</span>
+        <span class="s1">JLabel roomLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Available Rooms:&quot;</span><span class="s2">);</span>
+        <span class="s1">roomLabel</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">50</span><span class="s2">, </span><span class="s5">200</span><span class="s2">, </span><span class="s5">150</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">roomLabel</span><span class="s2">);</span>
+
+        <span class="s1">roomChoice </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Choice</span><span class="s2">();</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">conn c </span><span class="s2">= </span><span class="s0">new </span><span class="s1">conn</span><span class="s2">();</span>
+            <span class="s1">ResultSet rs </span><span class="s2">= </span><span class="s1">c</span><span class="s2">.</span><span class="s1">s</span><span class="s2">.</span><span class="s1">executeQuery</span><span class="s2">(</span><span class="s4">&quot;SELECT room_no FROM room WHERE Availability='Available'&quot;</span><span class="s2">);</span>
+            <span class="s0">while</span><span class="s2">(</span><span class="s1">rs</span><span class="s2">.</span><span class="s1">next</span><span class="s2">()) {</span>
+                <span class="s1">roomChoice</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">rs</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;room_no&quot;</span><span class="s2">));</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">SQLException e</span><span class="s2">) {</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s4">&quot;Database error: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+        <span class="s1">roomChoice</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">200</span><span class="s2">, </span><span class="s5">200</span><span class="s2">, </span><span class="s5">200</span><span class="s2">, </span><span class="s5">25</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">roomChoice</span><span class="s2">);</span>
+
+        <span class="s3">// Buttons</span>
+        <span class="s1">bookBtn </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s4">&quot;Book Now&quot;</span><span class="s2">);</span>
+        <span class="s1">bookBtn</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">200</span><span class="s2">, </span><span class="s5">300</span><span class="s2">, </span><span class="s5">120</span><span class="s2">, </span><span class="s5">30</span><span class="s2">);</span>
+        <span class="s1">bookBtn</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">bookBtn</span><span class="s2">);</span>
+
+        <span class="s1">backBtn </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s4">&quot;Back&quot;</span><span class="s2">);</span>
+        <span class="s1">backBtn</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s5">350</span><span class="s2">, </span><span class="s5">300</span><span class="s2">, </span><span class="s5">120</span><span class="s2">, </span><span class="s5">30</span><span class="s2">);</span>
+        <span class="s1">backBtn</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">backBtn</span><span class="s2">);</span>
+
+        <span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">actionPerformed</span><span class="s2">(</span><span class="s1">ActionEvent ae</span><span class="s2">) {</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">ae</span><span class="s2">.</span><span class="s1">getSource</span><span class="s2">() == </span><span class="s1">bookBtn</span><span class="s2">) {</span>
+            <span class="s0">try </span><span class="s2">{</span>
+                <span class="s1">String name </span><span class="s2">= </span><span class="s1">nameField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">String gender </span><span class="s2">= </span><span class="s1">maleRadio</span><span class="s2">.</span><span class="s1">isSelected</span><span class="s2">() ? </span><span class="s4">&quot;Male&quot; </span><span class="s2">: </span><span class="s4">&quot;Female&quot;</span><span class="s2">;</span>
+                <span class="s1">String contact </span><span class="s2">= </span><span class="s1">contactField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">String room </span><span class="s2">= </span><span class="s1">roomChoice</span><span class="s2">.</span><span class="s1">getSelectedItem</span><span class="s2">();</span>
+
+                <span class="s0">if</span><span class="s2">(</span><span class="s1">name</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">() || </span><span class="s1">contact</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s4">&quot;Please fill all fields&quot;</span><span class="s2">);</span>
+                    <span class="s0">return</span><span class="s2">;</span>
+                <span class="s2">}</span>
+
+                <span class="s1">conn c </span><span class="s2">= </span><span class="s0">new </span><span class="s1">conn</span><span class="s2">();</span>
+                <span class="s3">// Update room status</span>
+                <span class="s1">c</span><span class="s2">.</span><span class="s1">s</span><span class="s2">.</span><span class="s1">executeUpdate</span><span class="s2">(</span><span class="s4">&quot;UPDATE room SET Availability='Occupied' WHERE room_no='&quot;</span><span class="s2">+</span><span class="s1">room</span><span class="s2">+</span><span class="s4">&quot;'&quot;</span><span class="s2">);</span>
+
+                <span class="s3">// Insert patient</span>
+                <span class="s1">String query </span><span class="s2">= </span><span class="s4">&quot;INSERT INTO patient_info (Name, Gender, Number, Room_Number, Time) &quot; </span><span class="s2">+</span>
+                        <span class="s4">&quot;VALUES ('&quot;</span><span class="s2">+</span><span class="s1">name</span><span class="s2">+</span><span class="s4">&quot;', '&quot;</span><span class="s2">+</span><span class="s1">gender</span><span class="s2">+</span><span class="s4">&quot;', '&quot;</span><span class="s2">+</span><span class="s1">contact</span><span class="s2">+</span><span class="s4">&quot;', '&quot;</span><span class="s2">+</span><span class="s1">room</span><span class="s2">+</span><span class="s4">&quot;', NOW())&quot;</span><span class="s2">;</span>
+                <span class="s1">c</span><span class="s2">.</span><span class="s1">s</span><span class="s2">.</span><span class="s1">executeUpdate</span><span class="s2">(</span><span class="s1">query</span><span class="s2">);</span>
+
+                <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s4">&quot;Emergency bed booked successfully!&quot;</span><span class="s2">);</span>
+                <span class="s1">dispose</span><span class="s2">();</span>
+
+            <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">SQLException e</span><span class="s2">) {</span>
+                <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s4">&quot;Error: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">dispose</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// Add this to your Reception class to use it</span>
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s0">new </span><span class="s1">EmergencyBedBooking</span><span class="s2">();</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>

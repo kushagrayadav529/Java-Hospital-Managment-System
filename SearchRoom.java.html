@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>SearchRoom.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+SearchRoom.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">hospital</span><span class="s2">.</span><span class="s1">management</span><span class="s2">.</span><span class="s1">system</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">net</span><span class="s2">.</span><span class="s1">proteanit</span><span class="s2">.</span><span class="s1">sql</span><span class="s2">.</span><span class="s1">DbUtils</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.</span><span class="s1">ActionEvent</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.</span><span class="s1">ActionListener</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">sql</span><span class="s2">.</span><span class="s1">ResultSet</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">SearchRoom </span><span class="s0">extends </span><span class="s1">JFrame </span><span class="s2">{</span>
+
+    <span class="s1">Choice choice</span><span class="s2">;</span>
+    <span class="s1">JTable table</span><span class="s2">;</span>
+    <span class="s1">SearchRoom</span><span class="s2">(){</span>
+        <span class="s1">JPanel panel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">();</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">5</span><span class="s2">,</span><span class="s3">5</span><span class="s2">,</span><span class="s3">690</span><span class="s2">,</span><span class="s3">490</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Color</span><span class="s2">(</span><span class="s3">90</span><span class="s2">, </span><span class="s3">156</span><span class="s2">, </span><span class="s3">163</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">setLayout</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">panel</span><span class="s2">);</span>
+
+        <span class="s1">JLabel For </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Search For Room&quot;</span><span class="s2">);</span>
+        <span class="s1">For</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">250</span><span class="s2">,</span><span class="s3">11</span><span class="s2">,</span><span class="s3">186</span><span class="s2">,</span><span class="s3">31</span><span class="s2">);</span>
+        <span class="s1">For</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">For</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s4">&quot;Tahoma&quot;</span><span class="s2">,</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s3">20</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">For</span><span class="s2">);</span>
+
+        <span class="s1">JLabel status </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Status :&quot;</span><span class="s2">);</span>
+        <span class="s1">status</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">70</span><span class="s2">,</span><span class="s3">70</span><span class="s2">,</span><span class="s3">80</span><span class="s2">,</span><span class="s3">20</span><span class="s2">);</span>
+        <span class="s1">status</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">status</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s4">&quot;Tahoma&quot;</span><span class="s2">,</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">status</span><span class="s2">);</span>
+
+        <span class="s1">choice </span><span class="s2">=</span><span class="s0">new </span><span class="s1">Choice</span><span class="s2">();</span>
+        <span class="s1">choice</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">170</span><span class="s2">,</span><span class="s3">70</span><span class="s2">,</span><span class="s3">120</span><span class="s2">,</span><span class="s3">20</span><span class="s2">);</span>
+        <span class="s1">choice</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s4">&quot;Available&quot;</span><span class="s2">);</span>
+        <span class="s1">choice</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s4">&quot;Occupied&quot;</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">choice</span><span class="s2">);</span>
+
+        <span class="s1">table </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTable</span><span class="s2">();</span>
+        <span class="s1">table</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">0</span><span class="s2">,</span><span class="s3">187</span><span class="s2">,</span><span class="s3">700</span><span class="s2">,</span><span class="s3">210</span><span class="s2">);</span>
+        <span class="s1">table</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Color</span><span class="s2">(</span><span class="s3">90</span><span class="s2">, </span><span class="s3">156</span><span class="s2">, </span><span class="s3">163</span><span class="s2">));</span>
+        <span class="s1">table</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">table</span><span class="s2">);</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">conn c </span><span class="s2">= </span><span class="s0">new </span><span class="s1">conn</span><span class="s2">();</span>
+            <span class="s1">String q </span><span class="s2">= </span><span class="s4">&quot;select * from room&quot;</span><span class="s2">;</span>
+            <span class="s1">ResultSet resultSet </span><span class="s2">= </span><span class="s1">c</span><span class="s2">.</span><span class="s1">statement</span><span class="s2">.</span><span class="s1">executeQuery</span><span class="s2">(</span><span class="s1">q</span><span class="s2">);</span>
+            <span class="s1">table</span><span class="s2">.</span><span class="s1">setModel</span><span class="s2">(</span><span class="s1">DbUtils</span><span class="s2">.</span><span class="s1">resultSetToTableModel</span><span class="s2">(</span><span class="s1">resultSet</span><span class="s2">));</span>
+
+        <span class="s2">}</span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">){</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+        <span class="s1">JLabel Roomno </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Room Number&quot;</span><span class="s2">);</span>
+        <span class="s1">Roomno</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">23</span><span class="s2">,</span><span class="s3">162</span><span class="s2">,</span><span class="s3">150</span><span class="s2">,</span><span class="s3">20</span><span class="s2">);</span>
+        <span class="s1">Roomno</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">Roomno</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s4">&quot;Tahoma&quot;</span><span class="s2">,</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">Roomno</span><span class="s2">);</span>
+
+        <span class="s1">JLabel available </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Availability&quot;</span><span class="s2">);</span>
+        <span class="s1">available</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">175</span><span class="s2">,</span><span class="s3">162</span><span class="s2">,</span><span class="s3">150</span><span class="s2">,</span><span class="s3">20</span><span class="s2">);</span>
+        <span class="s1">available</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">available</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s4">&quot;Tahoma&quot;</span><span class="s2">,</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">available</span><span class="s2">);</span>
+
+        <span class="s1">JLabel price </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Price&quot;</span><span class="s2">);</span>
+        <span class="s1">price</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">458</span><span class="s2">,</span><span class="s3">162</span><span class="s2">,</span><span class="s3">150</span><span class="s2">,</span><span class="s3">20</span><span class="s2">);</span>
+        <span class="s1">price</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">price</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s4">&quot;Tahoma&quot;</span><span class="s2">,</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">price</span><span class="s2">);</span>
+
+        <span class="s1">JLabel Bed </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Bed Type&quot;</span><span class="s2">);</span>
+        <span class="s1">Bed</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">580</span><span class="s2">,</span><span class="s3">162</span><span class="s2">,</span><span class="s3">150</span><span class="s2">,</span><span class="s3">20</span><span class="s2">);</span>
+        <span class="s1">Bed</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">Bed</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s4">&quot;Tahoma&quot;</span><span class="s2">,</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">Bed</span><span class="s2">);</span>
+
+        <span class="s1">JButton Search </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s4">&quot;Search&quot;</span><span class="s2">);</span>
+        <span class="s1">Search</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">200</span><span class="s2">,</span><span class="s3">420</span><span class="s2">,</span><span class="s3">120</span><span class="s2">,</span><span class="s3">25</span><span class="s2">);</span>
+        <span class="s1">Search</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">black</span><span class="s2">);</span>
+        <span class="s1">Search</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">Search</span><span class="s2">);</span>
+        <span class="s1">Search</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ActionListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed</span><span class="s2">(</span><span class="s1">ActionEvent e</span><span class="s2">) {</span>
+                <span class="s1">String q </span><span class="s2">= </span><span class="s4">&quot;select * from Room where Availability = '&quot;</span><span class="s2">+</span><span class="s1">choice</span><span class="s2">.</span><span class="s1">getSelectedItem</span><span class="s2">()+</span><span class="s4">&quot;'&quot;</span><span class="s2">;</span>
+                <span class="s0">try </span><span class="s2">{</span>
+                    <span class="s1">conn c </span><span class="s2">= </span><span class="s0">new </span><span class="s1">conn</span><span class="s2">();</span>
+                    <span class="s1">ResultSet resultSet </span><span class="s2">= </span><span class="s1">c</span><span class="s2">.</span><span class="s1">statement</span><span class="s2">.</span><span class="s1">executeQuery</span><span class="s2">(</span><span class="s1">q</span><span class="s2">);</span>
+                    <span class="s1">table</span><span class="s2">.</span><span class="s1">setModel</span><span class="s2">(</span><span class="s1">DbUtils</span><span class="s2">.</span><span class="s1">resultSetToTableModel</span><span class="s2">(</span><span class="s1">resultSet</span><span class="s2">));</span>
+                <span class="s2">}</span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception E</span><span class="s2">){</span>
+                    <span class="s1">E</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">JButton Back </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s4">&quot;Back&quot;</span><span class="s2">);</span>
+        <span class="s1">Back</span><span class="s2">.</span><span class="s1">setBounds</span><span class="s2">(</span><span class="s3">380</span><span class="s2">,</span><span class="s3">420</span><span class="s2">,</span><span class="s3">120</span><span class="s2">,</span><span class="s3">25</span><span class="s2">);</span>
+        <span class="s1">Back</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">black</span><span class="s2">);</span>
+        <span class="s1">Back</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">white</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">Back</span><span class="s2">);</span>
+        <span class="s1">Back</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ActionListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed</span><span class="s2">(</span><span class="s1">ActionEvent e</span><span class="s2">) {</span>
+                <span class="s1">setVisible</span><span class="s2">(</span><span class="s0">false</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+
+        <span class="s1">setUndecorated</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">setSize</span><span class="s2">(</span><span class="s3">700</span><span class="s2">,</span><span class="s3">500</span><span class="s2">);</span>
+        <span class="s1">setLayout</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+        <span class="s1">setLocation</span><span class="s2">(</span><span class="s3">450</span><span class="s2">,</span><span class="s3">250</span><span class="s2">);</span>
+        <span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+    <span class="s2">}</span>
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s0">new </span><span class="s1">SearchRoom</span><span class="s2">();</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
